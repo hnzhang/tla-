@@ -1,31 +1,28 @@
 ---------------------------- MODULE SyncChannel ----------------------------
-EXTENDS Integers
+EXTENDS Naturals
 CONSTANT Data
 
-VARIABLES val, rdy, ack
+VARIABLES chan
+TypeInv == chan \in [val: Data, rdy : {0, 1}, ack: {0, 1} ]
 
-TypeInv ==  /\ val \in Data 
-            /\ rdy \in {0, 1} 
-            /\ ack \in {0, 1}
 
-TypeInit == /\ val \in Data
-            /\ rdy \in {0, 1}
-            /\ ack = rdy
+
+TypeInit == /\ TypeInv
+            /\ chan.ack = chan.rdy
             
-Send == /\ rdy = ack
-        /\ val' \in Data
-        /\ rdy' = 1 - rdy
-        /\ UNCHANGED ack
+Send(d) ==  /\ chan.rdy = chan.ack
+            /\ chan' = [chan EXCEPT !.rdy = 1 - @, !.val = d] 
 
-Recv == /\ rdy # ack
-        /\ ack' = 1 - ack
-        /\ UNCHANGED <<val, rdy>>
+Recv == /\ chan.rdy # chan.ack
+        /\ chan' = [chan EXCEPT !.ack = 1 - @]
+        
+Next ==  \/ (\E d \in Data: Send(d))
+         \/ Recv
 
-Next == Send \/ Recv
+Spec == TypeInit /\ [][Next]_chan
 
-Spec == TypeInit /\ [][Next]_<<val, rdy, ack>>
-
+THEOREM Spec => TypeInv
 =============================================================================
 \* Modification History
-\* Last modified Fri Sep 03 20:48:42 PDT 2021 by kids
+\* Last modified Sun Sep 05 09:50:35 PDT 2021 by kids
 \* Created Fri Sep 03 20:38:16 PDT 2021 by kids
