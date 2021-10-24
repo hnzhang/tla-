@@ -5,6 +5,9 @@ install tla-bin from https://github.com/pmer/tla-bin, which helps wrap tla tool 
 tlc <spec file> -continue
 example command to spec SyncChannel.tla
 tlc SyncChannel.tla -tool -modelcheck -coverage 1 -config ./SyncChannel.cfg -deadlock
+the following command helps to dump all sates into a text file
+tlc SyncChannel.tla -tool -modelcheck -coverage 1 -config ./SyncChannel.cfg -deadlock -dump SyncChannel.dot
+
 # Config file for TLA+ model
 a TLA+ models needs a config file to run.
 the following are all the possible options for the config file
