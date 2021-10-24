@@ -3,7 +3,8 @@ install tla-bin from https://github.com/pmer/tla-bin, which helps wrap tla tool 
 
 # Evaluate the specification directly without cfg file
 tlc <spec file> -continue
-
+example command to spec SyncChannel.tla
+tlc SyncChannel.tla -tool -modelcheck -coverage 1 -config ./SyncChannel.cfg -deadlock
 # Config file for TLA+ model
 a TLA+ models needs a config file to run.
 the following are all the possible options for the config file
