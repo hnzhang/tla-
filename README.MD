@@ -8,6 +8,10 @@ tlc SyncChannel.tla -tool -modelcheck -coverage 1 -config ./SyncChannel.cfg -dea
 the following command helps to dump all sates into a text file
 tlc SyncChannel.tla -tool -modelcheck -coverage 1 -config ./SyncChannel.cfg -deadlock -dump SyncChannel.dot
 
+the following command dumps out dot file for the graph. the dot file can be visualized as an image
+note that the dot after the -dump tells tlc the dumped format is in dot
+tlc DieHard.tla  -config DieHard.cfg -dump dot Diehard.dot -tool -modelcheck
+
 # Config file for TLA+ model
 a TLA+ models needs a config file to run.
 the following are all the possible options for the config file
